@@ -8,6 +8,7 @@ import connectDB from './config/db';
 import healthRoutes from './routes/health';
 import tutorRoutes from './routes/tutor.routes';
 import reviewRoutes from './routes/review.routes';
+import bookmarkRoutes from './routes/bookmark.routes';
 import { errorHandler, notFound } from './middlewares/error';
 
 // Load environment variables
@@ -46,8 +47,8 @@ app.use('/api', healthRoutes);
 // API routes
 app.use('/api/tutors', tutorRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/bookmarks', bookmarkRoutes);
 // app.use('/api/ai', aiRoutes);
-// app.use('/api/bookmarks', bookmarkRoutes);
 
 // 404 handler
 app.use(notFound);
