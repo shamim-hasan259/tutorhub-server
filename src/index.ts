@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 
 import connectDB from './config/db';
 import healthRoutes from './routes/health';
+import tutorRoutes from './routes/tutor.routes';
 import { errorHandler, notFound } from './middlewares/error';
 
 // Load environment variables
@@ -41,8 +42,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // Health check route
 app.use('/api', healthRoutes);
 
-// API routes will be added here
-// app.use('/api/tutors', tutorRoutes);
+// API routes
+app.use('/api/tutors', tutorRoutes);
 // app.use('/api/reviews', reviewRoutes);
 // app.use('/api/ai', aiRoutes);
 // app.use('/api/bookmarks', bookmarkRoutes);
