@@ -14,8 +14,9 @@ export const createTutorValidation = [
     .isLength({ max: 2000 })
     .withMessage('Bio must be less than 2000 characters'),
   body('subjects')
-    .isArray({ min: 1 })
-    .withMessage('At least one subject is required'),
+    .optional()
+    .isArray()
+    .withMessage('Subjects must be an array'),
   body('subjects.*')
     .trim()
     .notEmpty()
