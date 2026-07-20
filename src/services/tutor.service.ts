@@ -65,6 +65,7 @@ export const getAllTutors = async (query: TutorQuery) => {
 
   // Sort options
   let sortOption: Record<string, 1 | -1> = {};
+  let sortByName = false;
   switch (sort) {
     case 'price-low':
       sortOption = { hourlyRate: 1 };
@@ -78,8 +79,15 @@ export const getAllTutors = async (query: TutorQuery) => {
     case 'newest':
       sortOption = { createdAt: -1 };
       break;
+    case 'oldest':
+      sortOption = { createdAt: 1 };
+      break;
     case 'students':
       sortOption = { totalStudents: -1 };
+      break;
+    case 'name':
+      sortByName = true;
+      sortOption = { createdAt: -1 }; // default sort, re-sorted after populate
       break;
     default:
       sortOption = { rating: -1 };
@@ -96,6 +104,15 @@ export const getAllTutors = async (query: TutorQuery) => {
       .lean(),
     Tutor.countDocuments(filter),
   ]);
+
+  // Sort by name after populate (can't do this in the DB query)
+  if (sortByName) {
+    tutors.sort((a, b) => {
+      const nameA = (a.userId as any)?.name || '';
+      const nameB = (b.userId as any)?.name || '';
+      return nameA.localeCompare(nameB);
+    });
+  }
 
   return {
     tutors,
