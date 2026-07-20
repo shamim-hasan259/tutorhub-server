@@ -13,6 +13,7 @@ import aiRoutes from './routes/ai.routes';
 import profileRoutes from './routes/profile.routes';
 import bookingRoutes from './routes/booking.routes';
 import paymentRoutes from './routes/payment.routes';
+import adminRoutes from './routes/admin.routes';
 import { errorHandler, notFound } from './middlewares/error';
 
 // Load environment variables
@@ -56,6 +57,7 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/payments', paymentRoutes);
+app.use('/api/admin', adminRoutes);
 
 // 404 handler
 app.use(notFound);
