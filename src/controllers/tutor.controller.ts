@@ -91,3 +91,22 @@ export const getTutorsBySubject = async (req: Request, res: Response): Promise<v
     sendError(res, 500, 'Failed to fetch tutors');
   }
 };
+
+export const getMyTutorProfile = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    if (!req.user) {
+      sendError(res, 401, 'Not authenticated');
+      return;
+    }
+
+    const tutor = await tutorService.getTutorByUserId(req.user.id);
+    if (!tutor) {
+      sendError(res, 404, 'Tutor profile not found');
+      return;
+    }
+
+    sendResponse(res, 200, tutor, 'Tutor profile retrieved successfully');
+  } catch (error) {
+    sendError(res, 500, 'Failed to fetch tutor profile');
+  }
+};

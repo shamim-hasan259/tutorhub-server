@@ -24,6 +24,14 @@ router.get(
   tutorController.getTutorsBySubject
 );
 
+// Protected routes - Tutor only
+router.get(
+  '/me',
+  authenticate,
+  authorize('tutor'),
+  tutorController.getMyTutorProfile
+);
+
 router.get(
   '/:id',
   getTutorValidation,

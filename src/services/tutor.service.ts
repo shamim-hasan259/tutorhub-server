@@ -124,6 +124,14 @@ export const getTutorById = async (id: string): Promise<ITutorDocument> => {
   return tutor as unknown as ITutorDocument;
 };
 
+export const getTutorByUserId = async (userId: string): Promise<ITutorDocument | null> => {
+  const tutor = await Tutor.findOne({ userId })
+    .populate('userId', 'name email avatar phone address')
+    .lean();
+
+  return tutor as unknown as ITutorDocument | null;
+};
+
 export const createTutor = async (userId: string, tutorData: Partial<ITutorDocument>): Promise<ITutorDocument> => {
   // Check if user already has a tutor profile
   const existingTutor = await Tutor.findOne({ userId });
